@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Voyago</title>
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="auth-body">
+
+  <!-- Full Background Section -->
+  <div class="auth-container">
+    <div class="form-box">
+      <h2>Login to Voyago</h2>
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+  </div>
+
+</body>
+</html>

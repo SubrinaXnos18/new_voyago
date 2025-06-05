@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thank You | Voyago</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+    <div class="container" style="text-align: center;">
+        <h2>🎉 Thank you, {{ user.username }}!</h2>
+        <p>You’ve successfully booked your trip to <strong>{{ package.destination }}</strong>.</p>
+        <a href="{% url 'bookings' %}" class="btn">Back to Bookings</a>
+    </div>
+</body>
+</html>
