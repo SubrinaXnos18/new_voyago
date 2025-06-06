@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voyago - Explore Bangladesh</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Minimal styling for the search bar inputs */
+    .search-box {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-box div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .search-box input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      width: 150px;
+    }
+
+    .search-box button {
+      padding: 10px 20px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-box button:hover {
+      background-color: #219653;
+    }
+
+    @media (max-width: 600px) {
+      .search-box input {
+        width: 120px;
+      }
+
+      .search-box button {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header class="header">
+    <div class="logo">VOYAGO</div>
+    <nav class="nav-links">
+      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'bookings' %}">Booking</a>
+      <a href="{% url 'my_diary' %}">My Diary</a>
+      <a href="{% url 'contact_us' %}">Contact Us</a>
+
+      {% if user.is_authenticated %}
+    <!-- Logged in user, show logout -->
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <!-- Not logged in, show login/register -->
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <img src="{% static 'shapla.jpg' %}" alt="Hero Image" class="hero-image">
+    <div class="hero-text">
+      <h1>WELCOME TO BANGLADESH</h1>
+      <p>Explore beautiful places of Bangladesh with Voyago</p>
+    </div>
+
+    <div class="search-box">
+      <div>
+        <strong>Location</strong><br>
+        <input type="text" id="destination" placeholder="Add destination">
+      </div>
+      <div>
+        <strong>Check in</strong><br>
+        <input type="date" id="checkin">
+      </div>
+      <div>
+        <strong>Check out</strong><br>
+        <input type="date" id="checkout">
+      </div>
+      <div>
+        <strong>Guests</strong><br>
+        <input type="number" id="guests" min="1" placeholder="Add guests">
+      </div>
+      <div>
+        <button onclick="searchPackages()">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="features">
+    <h2>WHY CHOOSE US?</h2>
+    <div class="feature-boxes">
+      <div>
+        <img class="feature-icon" src="{% static 'doller.png' %}" alt="Icon">
+        <h4>Competitive Prices</h4>
+        <p>You will get a reasonable and budget-friendly rate in here.</p>
+      </div>
+      <div>
+        <img class="feature-icon" src="{% static 'cyber-security.png' %}" alt="Icon">
+        <h4>Secure Booking</h4>
+        <p>We got you the most secure booking via top-tier payment systems.</p>
+      </div>
+      <div>
+        <img class="feature-icon" src="{% static 'refresh.png' %}" alt="Icon">
+        <h4>Seamless Experience</h4>
+        <p>System is made very much user-friendly so you can book hassle-free.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partners -->
+  <section class="partners">
+    <h2>OUR PARTNERS</h2>
+    <div class="partner-logos">
+      <img src="{% static 'logo.png' %}" alt="Cozybnb">
+      <img src="{% static 'logo2.png' %}" alt="Serendipity">
+      <img src="{% static 'logo3.png' %}" alt="Hideaway">
+      <img src="{% static 'logo4.png' %}" alt="Earthly">
+      <img src="{% static 'logo5.png' %}" alt="The Nook">
+    </div>
+  </section>
+
+  <!-- Top Book Now -->
+  <section class="top-book">
+    <h2>TOP BOOK NOW</h2>
+    <div class="book-grid">
+      <!-- Example Box (Repeat for all) -->
+      <div class="book-card">
+        <img src="{% static 'hotel.jpg' %}" alt="Place Image">
+        <h4>The Oasis</h4>
+        <p>$10,000</p>
+        <small>Nusa Islands, Bali</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explore Bangladesh -->
+  <section class="explore-banner">
+    <h2>EXPLORE BANGLADESH</h2>
+    <p>Try our service and explore the green beauty of Bangladesh.</p>
+    <div class="explore-images">
+      <img src="{% static 'cox.jpg' %}" alt="Place">
+      <img src="{% static 'saint.jpg' %}" alt="Place">
+      <img src="{% static 'tea.jpg' %}" alt="Place">
+    </div>
+  </section>
+
+  <!-- Feature News -->
+  <section class="news">
+    <h2>Feature News</h2>
+    <div class="news-items">
+      <div class="news-card">
+        <img src="{% static 'mermaid.jpg' %}" alt="Food">
+        <h4>Delicious restaurant at Inani Beach</h4>
+        <p>The Mermaid cafe is one of the premium restaurants of Inani Beach.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <h2>Testimonials</h2>
+    <div class="testimonial-cards">
+      <div class="testimonial">
+        <img src="{% static 'profile.png' %}" alt="Avatar">
+        <h4>Sebastian</h4>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscribe -->
+  <section class="subscribe">
+    <div>
+      <h3>Get special offers, and more from travelworld</h3>
+      <input type="email" placeholder="Enter your email">
+      <button>Subscribe</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-columns">
+      <div>
+        <h5>Support</h5>
+        <p>Help Center</p>
+        <p>Safety info</p>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <p>About Us</p>
+        <p>Blog</p>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <p>Get in Touch</p>
+      </div>
+      <div>
+        <h5>Social</h5>
+        <p>🔗</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+  <script>
+    function searchPackages() {
+      // Get input values
+      const destination = document.getElementById('destination').value;
+      const checkin = document.getElementById('checkin').value;
+      const checkout = document.getElementById('checkout').value;
+      const guests = document.getElementById('guests').value;
+
+      // Basic validation
+      if (!destination || !checkin || !checkout || !guests) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      // Construct the query string
+      const queryParams = new URLSearchParams({
+        destination: destination,
+        checkin: checkin,
+        checkout: checkout,
+        guests: guests
+      }).toString();
+
+      // Redirect to the bookings page with query parameters
+      window.location.href = "{% url 'bookings' %}?" + queryParams;
+    }
+  </script>
+</body>
+</html>

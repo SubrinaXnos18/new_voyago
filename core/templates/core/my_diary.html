@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Diary | Voyago</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .diary-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .diary-container h2 {
+            font-size: 24px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .diary-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .diary-form textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            resize: vertical;
+            color: #999;
+        }
+        .diary-form input[type="file"] {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .diary-form .btn {
+            background: #ff6f61;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 0 auto;
+        }
+        .diary-form .btn:hover {
+            background: #e55a50;
+        }
+        .diary-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+        }
+        .diary-card img {
+            max-width: 200px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .diary-card .card-body {
+            padding: 20px;
+        }
+        .diary-card p {
+            margin: 0 0 10px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .diary-card small {
+            color: #777;
+            font-size: 14px;
+        }
+        .empty-message {
+            text-align: center;
+            color: #777;
+            font-size: 18px;
+            margin-top: 40px;
+        }
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+        }
+        .image-modal .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .debug-message {
+            color: #ff6f61;
+            font-size: 14px;
+            padding: 10px;
+        }
+        .login-prompt {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .login-prompt a {
+            color: #ff6f61;
+            text-decoration: none;
+        }
+        .login-prompt a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="logo">VOYAGO</div>
+    <nav class="nav-links">
+      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'bookings' %}">Booking</a>
+      <a href="{% url 'my_diary' %}">My Diary</a>
+      <a href="{% url 'contact_us' %}">Contact Us</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <div class="diary-container">
+    <h2><span>📖</span> My Travel Diary</h2>
+
+    {% if user.is_authenticated %}
+      <form method="POST" enctype="multipart/form-data" class="diary-form">
+        {% csrf_token %}
+        <textarea name="text" placeholder="Write about your journey..." required></textarea>
+        <input type="file" name="images" accept="image/*" multiple>
+        <button type="submit" class="btn">Post</button>
+      </form>
+    {% else %}
+      <div class="login-prompt">
+        <p>Please <a href="{% url 'login' %}">login</a> to post in the diary.</p>
+      </div>
+    {% endif %}
+
+    <hr>
+
+    {% for entry in entries %}
+      <div class="diary-card">
+        {% if entry.images.all %}
+          <div class="image-gallery">
+            {% for image in entry.images.all %}
+              <img src="{{ image.image.url }}" alt="Travel Photo" onclick="openImageModal('{{ image.image.url }}')">
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="debug-message">No images found for this entry.</p>
+        {% endif %}
+        <div class="card-body">
+          <p>{{ entry.text }}</p>
+          <small>Posted on {{ entry.created_at|date:"F j, Y" }}</small>
+        </div>
+      </div>
+    {% empty %}
+      <p class="empty-message">No entries yet. Start writing your first travel story!</p>
+    {% endfor %}
+  </div>
+
+  <!-- Image Modal -->
+  <div class="image-modal" id="imageModal">
+    <span class="close" onclick="closeImageModal()">×</span>
+    <img id="modalImage" src="" alt="Full-size Image">
+  </div>
+
+  <script>
+    function openImageModal(imageUrl) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      modalImage.src = imageUrl;
+      modal.style.display = 'flex';
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+    }
+
+    window.onclick = function(e) {
+      const modal = document.getElementById('imageModal');
+      if (e.target === modal) closeImageModal();
+    }
+  </script>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

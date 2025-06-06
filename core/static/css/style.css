@@ -1,0 +1,377 @@
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #d2e8ee
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #00a9c5;
+  }
+  
+  .nav-links a {
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .menu-icon {
+    display: flex
+  }
+  
+  /* Hero Section */
+  .hero {
+    position: relative;
+    text-align: center;
+  }
+  
+  .hero-image {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    background-color: #eee;
+  }
+  
+  .hero-text {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-shadow: 1px 1px 5px #000;
+  }
+  
+  .hero-text h1 {
+    font-size: 2.5rem;
+    color: #00a9c5;
+  }
+  
+  .hero-text p {
+    font-size: 1.1rem;
+  }
+  
+  .search-box {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 10px;
+    width: 80%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    gap: 10px;
+  }
+  
+  .search-box div {
+    text-align: left;
+    font-size: 0.9rem;
+  }
+  
+  /* Features */
+  .features {
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+  }
+  
+  .feature-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .feature-boxes div {
+    background: #f9f9f9;
+    padding: 1rem;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+
+  .feature-icon {
+    height: 90px;
+    width: 90px;
+  }
+   
+  
+  /* Partners */
+  .partners {
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  
+  .partner-logos {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  
+  .partner-logos img {
+    width: 80px;
+    height: 80px;
+    background: #ddd;
+    border-radius: 10px;
+  }
+  
+  /* Top Book Now */
+  .top-book {
+    padding: 3rem 5%;
+    text-align: center;
+  }
+  
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .book-card {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    background: transparent;
+    transition: 0.3s;
+  }
+  
+  .book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .book-card img {
+    width: 100%;
+    height: 180px;
+    background: #ccc;
+    object-fit: cover;
+  }
+  
+  .book-card h4 {
+    margin: 0.5rem;
+  }
+  
+  .book-card p, .book-card small {
+    margin: 0.2rem 0.5rem;
+    color: #666;
+  }
+  
+  /* Explore Section */
+  .explore-banner {
+    padding: 3rem 2rem;
+    text-align: center;
+    background: linear-gradient(#00000088, #fcd8d888), url("beautiful-bangladesh.jpg") center/cover no-repeat;
+    color: white;
+  }
+  
+  .explore-banner h2 {
+    font-size: 2rem;
+  }
+  
+  .explore-images {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .explore-images img {
+    width: 180px;
+    height: 100px;
+    background: #ccc;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  /* News Section */
+  .news {
+    padding: 3rem 5%;
+  }
+  
+  .news-items {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .news-card {
+    width: 250px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .news-card img {
+    width: 100%;
+    height: 150px;
+    background: #ccc;
+    object-fit: cover;
+  }
+  
+  /* Testimonials */
+  .testimonials {
+    padding: 3rem 5%;
+    background: linear-gradient(#00000088, #fcd8d888), url("hotel.jpg") center/cover no-repeat;
+    text-align: center;
+  }
+  
+  .testimonials h2{
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    color: White;
+  }
+  .testimonial-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  
+  .testimonial {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+  
+  .testimonial img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ccc;
+  }
+  
+  /* Subscribe */
+  .subscribe {
+    padding: 3rem 5%;
+    background: #e7f7fa;
+    text-align: center;
+  }
+  
+  .subscribe input {
+    padding: 0.5rem;
+    width: 250px;
+    margin-right: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .subscribe button {
+    padding: 0.5rem 1rem;
+    background: #00a9c5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Footer */
+  .footer {
+    padding: 2rem 5%;
+    background: #222;
+    color: #ccc;
+  }
+  
+  .footer-columns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .footer-columns div {
+    margin: 1rem;
+  }
+  
+  .footer h5 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer p {
+    margin: 0.2rem 0;
+  }
+  
+  .nav-links a {
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-links a:hover {
+    color: #ff9900;  /* Change to your preferred color */
+}
+
+.nav-links .login-register {
+    font-weight: bold;
+    color: #0066cc;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #45a049;
+}
+.messages li {
+    padding: 10px;
+    margin: 5px 0;
+}
+.messages .success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+.messages .error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+.errorlist {
+    color: #a94442;
+    list-style-type: none;
+    padding: 0;
+}
+.errorlist li {
+    margin: 5px 0;
+}

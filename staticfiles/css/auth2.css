@@ -1,0 +1,57 @@
+/* Background styling */
+.auth-body {
+    background-image: url('/static/bg.jpg'); /* Replace with your background image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Transparent centered container */
+  .auth-container {
+    background: rgb(53 239 21 / 15%);
+    border: 1px solid rgb(0 0 0 / 30%);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    width: 320px;
+    box-shadow: 0 8px 32px rgb(0 0 0 / 34%);
+    color: #000000;
+    text-align: center;
+  }
+  
+  /* Input and Button Styling */
+  .auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .auth-container button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #ff7b54;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .auth-container button:hover {
+    background-color: #ff5e33;
+  }
+  
+  .auth-container a {
+    color: #30ec0a;
+    text-decoration: underline;
+  }
+  

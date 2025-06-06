@@ -1,0 +1,60 @@
+/* Full background image */
+.auth-body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url('../login-bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  /* Centered transparent box */
+  .auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .form-box {
+    background-color: rgb(243 234 11 / 40%); /* Transparent white */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 400px;
+    color: #000000;
+  }
+  
+  .form-box h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 28px;
+  }
+  
+  .form-box form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-box input[type="text"],
+  .form-box input[type="password"],
+  .form-box input[type="email"] {
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+  }
+  
+  .form-box button {
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #ff9800;
+    border: none;
+    border-radius: 10px;
+    color: white
+  }
