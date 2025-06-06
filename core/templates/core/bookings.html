@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voyago - Book Your Trip</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Add responsive behavior for navigation bar */
+        .menu-icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                padding: 20px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="logo">VOYAGO</div>
+    <nav class="nav-links">
+      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'bookings' %}">Booking</a>
+      <a href="{% url 'my_diary' %}">My Diary</a>
+      <a href="{% url 'contact_us' %}">Contact Us</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+    </nav>
+    <div class="menu-icon">☰</div>
+  </header>
+
+<div class="container">
+    <h1>Available Travel Packages</h1>
+    <div class="grid">
+        {% for package in packages %}
+            <div class="card">
+                {% if package.image %}
+                    <img src="{{ package.image.url }}" alt="{{ package.name }}">
+                {% else %}
+                    <img src="{% static 'hotel.jpg' %}" alt="Default Image">
+                {% endif %}
+                <div class="card-body">
+                    <h3>{{ package.name }}</h3>
+                    <p>{{ package.destination }}</p>
+                    <p><strong>${{ package.price }}</strong> | {{ package.days }} Days</p>
+
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'payment' package.id %}" class="btn">Book Now</a>
+                    {% else %}
+                        <a href="#" class="btn" onclick="openModal('{{ package.id }}')">Book Now</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="authModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h2>Please Login or Register</h2>
+        <p>To book this package, you must be logged in.</p>
+        <a id="loginRedirect" href="#" class="btn">Login</a>
+        <a id="registerRedirect" href="#" class="btn">Register</a>
+    </div>
+</div>
+
+<script>
+    let selectedPackageId = null;
+
+    function openModal(packageId) {
+        const modal = document.getElementById('authModal');
+        const loginBtn = document.getElementById('loginRedirect');
+        const registerBtn = document.getElementById('registerRedirect');
+
+        const nextUrl = `/payment/${packageId}/`;
+
+        loginBtn.href = `{% url 'login' %}?next=${nextUrl}`;
+        registerBtn.href = `{% url 'register' %}?next=${nextUrl}`;
+
+        modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('authModal').style.display = 'none';
+    }
+
+    function showLogin() {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registerForm').style.display = 'none';
+    }
+
+    function showRegister() {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'block';
+    }
+
+    window.onclick = function(e) {
+        const modal = document.getElementById('authModal');
+        if (e.target === modal) closeModal();
+    }
+
+    // Mobile menu toggle
+    document.querySelector('.menu-icon').addEventListener('click', function() {
+        document.querySelector('.nav-links').classList.toggle('active');
+    });
+</script>
+
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

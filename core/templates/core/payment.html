@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voyago | Payment</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    <style>
+        /* Container styling for centering and clean layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            min-height: 100vh; /* Ensure full viewport height for positioning */
+        }
+
+        /* Card styling for a clean and attractive interface */
+        .card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 13px 5px rgba(0, 0, 0, 0.1);
+            padding: 100px;
+            margin-top: 150px; /* Space for the floating image */
+            display: inline-block;
+            text-align: left;
+            transition: transform 0.3s ease; /* Smooth hover effect on card */
+        }
+
+        
+
+        /* Image styling for middle top and floating effect */
+        .card img {
+            position: absolute;
+            top: 90px; /* Adjust to center vertically */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 350px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 10px 5px rgba(0, 0, 0, 0.2);
+            animation: float 4s ease-in-out infinite; /* Floating animation */
+            transition: transform 0.3s ease; /* Smooth transition for animation */
+        }
+
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+            100% { transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Card body styling for details */
+        .card-body {
+            padding: 20px 0;
+            color: #333;
+        }
+
+        .card-body h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            transition: color 0.3s ease;
+        }
+
+        .card-body h3:hover {
+            color: #3498db; /* Interactive color change on hover */
+        }
+
+        .card-body p {
+            font-size: 16px;
+            margin: 5px 0;
+            line-height: 1.5;
+            color: #7f8c8d;
+        }
+
+        .card-body p strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        /* Form and button styling */
+        form {
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #27ae60;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Smooth transition for hover effect */
+        }
+
+        .btn:hover {
+            background-color: #219653;
+            transform: scale(1.05); /* Slight scale up on hover */
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4); /* Subtle shadow on hover */
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .card img {
+                width: 150px;
+                height: 150px;
+                top: 30px;
+            }
+
+            .card {
+                margin-top: 120px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirm Your Trip</h2>
+        <div class="card">
+            {% if package.image %}
+                <img src="{{ package.image.url }}" alt="{{ package.name }}">
+            {% else %}
+                <img src="{% static 'hotel.jpg' %}" alt="Default Image">
+            {% endif %}
+            <div class="card-body">
+                <h3>{{ package.name }}</h3>
+                <p><strong>Destination:</strong> {{ package.destination }}</p>
+                <p><strong>Duration:</strong> {{ package.days }} days</p>
+                <p>{{ package.description }}</p>
+                <p><strong>Price:</strong> ${{ package.price }}</p>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Pay Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
