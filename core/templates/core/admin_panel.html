@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel | Voyago</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>📊 Voyago Admin Panel</h2>
+
+        <section>
+            <h3>📦 Packages</h3>
+            <a href="{% url 'add_package' %}" class="btn">➕ Add New Package</a>
+            <ul>
+                {% for package in packages %}
+                    <li>
+                        {{ package.name }} ({{ package.destination }}) - ${{ package.price }}
+                        <a href="{% url 'edit_package' package.id %}">Edit</a> |
+                        <a href="{% url 'delete_package' package.id %}">Delete</a>
+                    </li>
+                {% empty %}
+                    <p>No packages yet.</p>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <hr>
+
+        <section>
+            <h3>📋 Recent Bookings</h3>
+            <ul>
+                {% for booking in bookings %}
+                    <li>
+                        {{ booking.user.username }} booked {{ booking.package.name }}
+                        on {{ booking.booked_on|date:"M d, Y - H:i" }}
+                    </li>
+                {% empty %}
+                    <p>No bookings yet.</p>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+</body>
+</html>
